@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from 'next/font/google';
 import localFont from 'next/font/local';
 import './globals.css';
 import { Navigation } from '@/components/navigation';
+import { siteConfig } from '@/lib/config';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -31,7 +32,7 @@ export const metadata: Metadata = {
   title: 'Algorütm — Estonian Tech Podcast',
   description:
     'Algorütm is an Estonian tech podcast covering software, startups, and the digital world.',
-  metadataBase: new URL('https://algorytm.ee'),
+  metadataBase: new URL(siteConfig.url),
   openGraph: {
     title: 'Algorütm — Estonian Tech Podcast',
     description:

@@ -1,5 +1,6 @@
 import Parser from 'rss-parser';
 import type { Episode } from '@/lib/types/episode';
+import { siteConfig } from '@/lib/config';
 
 type RssItem = {
   guid: string;
@@ -49,17 +50,11 @@ function parseDuration(duration: string): number {
  * Fetches and parses the Captivate.fm RSS feed, returning published episodes newest first.
  * Results are cached for 1 hour via Next.js fetch cache.
  *
- * @throws {Error} When CAPTIVATE_RSS_URL is missing or the feed cannot be fetched
+ * @throws {Error} When the feed cannot be fetched or parsed
  */
 export async function getEpisodesFromRss(): Promise<Episode[]> {
-  const rssUrl = process.env.CAPTIVATE_RSS_URL;
-
-  if (!rssUrl) {
-    throw new Error('Missing CAPTIVATE_RSS_URL environment variable');
-  }
-
   // Fetch through Next.js so the response is cached
-  const response = await fetch(rssUrl, {
+  const response = await fetch(siteConfig.rssUrl, {
     next: { revalidate: 3600 },
   });
 
