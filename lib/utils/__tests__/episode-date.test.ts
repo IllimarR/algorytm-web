@@ -57,4 +57,10 @@ describe('filterEpisodesByDateRange', () => {
     const result = filterEpisodesByDateRange(episodes, '2023-01', '2024-11');
     expect(result).toHaveLength(4);
   });
+
+  it('treats an episode with empty publishedAt as outside any normal range', () => {
+    const ep = makeEp('', 'empty-ep');
+    const result = filterEpisodesByDateRange([ep], '2023-01', '2024-12');
+    expect(result).toHaveLength(0);
+  });
 });
