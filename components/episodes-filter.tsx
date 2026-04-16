@@ -1,10 +1,16 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { EpisodeCard } from '@/components/episode-card';
 import { toYearMonth, filterEpisodesByDateRange } from '@/lib/utils/episode-date';
 import type { Episode } from '@/lib/types/episode';
+
+const YM_RE = /^\d{4}-(0[1-9]|1[0-2])$/;
+
+function validYm(value: string | null, fallback: string): string {
+  return value && YM_RE.test(value) ? value : fallback;
+}
 
 const MONTHS = [
   'jaanuar', 'veebruar', 'märts', 'aprill', 'mai', 'juuni',
@@ -23,19 +29,25 @@ export function EpisodesFilter({ episodes }: EpisodesFilterProps) {
   const router = useRouter();
 
   // Oldest episode month/year as the default "from"
-  const sorted = [...episodes].sort((a, b) =>
-    a.publishedAt.localeCompare(b.publishedAt)
+  const sorted = useMemo(
+    () => [...episodes].sort((a, b) => a.publishedAt.localeCompare(b.publishedAt)),
+    [episodes]
   );
-  const defaultFrom =
-    sorted.length > 0
-      ? toYearMonth(sorted[0].publishedAt)
-      : toYearMonth(new Date().toISOString());
-  const defaultTo = toYearMonth(new Date().toISOString());
 
-  const from = searchParams.get('from') ?? defaultFrom;
-  const to = searchParams.get('to') ?? defaultTo;
+  const defaultFrom = useMemo(
+    () =>
+      sorted.length > 0
+        ? toYearMonth(sorted[0].publishedAt)
+        : toYearMonth(new Date().toISOString()),
+    [sorted]
+  );
 
-  // Apply defaults to URL on mount if params are absent
+  const defaultTo = useMemo(() => toYearMonth(new Date().toISOString()), []);
+
+  const from = validYm(searchParams.get('from'), defaultFrom);
+  const to = validYm(searchParams.get('to'), defaultTo);
+
+  // Apply defaults to URL on mount if either param is absent
   useEffect(() => {
     const hasFrom = searchParams.get('from');
     const hasTo = searchParams.get('to');
@@ -50,15 +62,17 @@ export function EpisodesFilter({ episodes }: EpisodesFilterProps) {
   const [fromYear, fromMonth] = from.split('-').map(Number);
   const [toYear, toMonth] = to.split('-').map(Number);
 
-  const oldestYear =
-    sorted.length > 0
-      ? Number(toYearMonth(sorted[0].publishedAt).slice(0, 4))
-      : new Date().getFullYear();
-  const currentYear = new Date().getFullYear();
-  const years = Array.from(
-    { length: currentYear - oldestYear + 1 },
-    (_, i) => oldestYear + i
-  );
+  const years = useMemo(() => {
+    const oldestYear =
+      sorted.length > 0
+        ? Number(defaultFrom.slice(0, 4))
+        : new Date().getFullYear();
+    const currentYear = new Date().getFullYear();
+    return Array.from(
+      { length: currentYear - oldestYear + 1 },
+      (_, i) => oldestYear + i
+    );
+  }, [sorted, defaultFrom]);
 
   /**
    * Updates a date range URL param and navigates to the updated URL.

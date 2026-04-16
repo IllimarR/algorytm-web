@@ -71,14 +71,19 @@ describe('EpisodesFilter', () => {
     expect(screen.getByText('1 saadet')).toBeInTheDocument();
   });
 
+  it('calls router.replace on mount to write default params when none are present', () => {
+    render(<EpisodesFilter episodes={episodes} />);
+    expect(mockReplace).toHaveBeenCalledWith(
+      expect.stringMatching(/from=2023-01&to=\d{4}-\d{2}/)
+    );
+  });
+
   it('calls router.replace when "from" year select changes', () => {
     mockSearchParams.set('from', '2023-01');
     mockSearchParams.set('to', '2024-03');
     render(<EpisodesFilter episodes={episodes} />);
-    // The "from" year select — first select with year values
-    const yearSelects = screen.getAllByRole('combobox');
-    // yearSelects order: fromMonth, fromYear, toMonth, toYear
-    fireEvent.change(yearSelects[1], { target: { value: '2024' } });
+    const fromYearSelect = screen.getByRole('combobox', { name: 'Alates aasta' });
+    fireEvent.change(fromYearSelect, { target: { value: '2024' } });
     expect(mockReplace).toHaveBeenCalledWith(
       expect.stringContaining('from=2024-01')
     );
@@ -88,9 +93,8 @@ describe('EpisodesFilter', () => {
     mockSearchParams.set('from', '2023-01');
     mockSearchParams.set('to', '2024-03');
     render(<EpisodesFilter episodes={episodes} />);
-    const yearSelects = screen.getAllByRole('combobox');
-    // toMonth is index 2
-    fireEvent.change(yearSelects[2], { target: { value: '11' } });
+    const toMonthSelect = screen.getByRole('combobox', { name: 'Kuni kuu' });
+    fireEvent.change(toMonthSelect, { target: { value: '11' } });
     expect(mockReplace).toHaveBeenCalledWith(
       expect.stringContaining('to=2024-11')
     );
