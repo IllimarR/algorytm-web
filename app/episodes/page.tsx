@@ -18,7 +18,7 @@ export default async function EpisodesPage() {
         </p>
         <h1
           className="text-4xl sm:text-5xl font-bold tracking-tight"
-          style={{ fontFamily: 'var(--font-syne)' }}
+          style={{ fontFamily: 'var(--font-raleway)' }}
         >
           All Episodes
         </h1>

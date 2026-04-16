@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
-import { Geist, Geist_Mono, Syne } from 'next/font/google';
+import { Geist, Geist_Mono } from 'next/font/google';
+import localFont from 'next/font/local';
 import './globals.css';
 import { Navigation } from '@/components/navigation';
 
@@ -13,9 +14,17 @@ const geistMono = Geist_Mono({
   subsets: ['latin'],
 });
 
-const syne = Syne({
-  variable: '--font-syne',
-  subsets: ['latin'],
+const raleway = localFont({
+  src: [
+    { path: '../public/font/Raleway-Regular.ttf', weight: '400', style: 'normal' },
+    { path: '../public/font/Raleway-Italic.ttf', weight: '400', style: 'italic' },
+    { path: '../public/font/Raleway-Medium.ttf', weight: '500', style: 'normal' },
+    { path: '../public/font/Raleway-SemiBold.ttf', weight: '600', style: 'normal' },
+    { path: '../public/font/Raleway-Bold.ttf', weight: '700', style: 'normal' },
+    { path: '../public/font/Raleway-ExtraBold.ttf', weight: '800', style: 'normal' },
+    { path: '../public/font/Raleway-Black.ttf', weight: '900', style: 'normal' },
+  ],
+  variable: '--font-raleway',
 });
 
 export const metadata: Metadata = {
@@ -40,7 +49,7 @@ export default function RootLayout({
   return (
     <html
       lang="et"
-      className={`${geistSans.variable} ${geistMono.variable} ${syne.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${raleway.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-[#0d0f14] text-white">
         <Navigation />

@@ -7,15 +7,16 @@ export function Navigation() {
       <nav className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-3 group">
           <Image
-            src="/media/logo/Algorütm_Logo white.png"
-            alt="Algorütm"
+            src="/media/logo/Algorütm_Logo icon round.svg"
+            alt=""
             width={32}
             height={32}
             className="w-8 h-8 object-contain"
+            aria-hidden="true"
           />
           <span
             className="font-bold text-lg tracking-tight"
-            style={{ fontFamily: 'var(--font-syne)' }}
+            style={{ fontFamily: 'var(--font-raleway)' }}
           >
             Algorütm
           </span>

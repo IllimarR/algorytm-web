@@ -16,7 +16,7 @@ export default async function HomePage() {
           </p>
           <h1
             className="text-5xl sm:text-7xl font-bold leading-[0.95] tracking-tight mb-8"
-            style={{ fontFamily: 'var(--font-syne)' }}
+            style={{ fontFamily: 'var(--font-raleway)' }}
           >
             Algo
             <span className="text-brand-amber">rütm</span>
@@ -29,7 +29,7 @@ export default async function HomePage() {
             <Link
               href="/episodes"
               className="inline-flex items-center gap-2 px-6 py-3 bg-brand-amber text-[#0d0f14] text-sm font-bold hover:bg-brand-amber/90 transition-colors"
-              style={{ fontFamily: 'var(--font-syne)' }}
+              style={{ fontFamily: 'var(--font-raleway)' }}
             >
               All Episodes
               <span aria-hidden="true">→</span>
@@ -46,7 +46,7 @@ export default async function HomePage() {
         <div className="flex items-baseline justify-between mb-8">
           <h2
             className="text-sm font-bold tracking-[0.15em] text-white/40 uppercase"
-            style={{ fontFamily: 'var(--font-syne)' }}
+            style={{ fontFamily: 'var(--font-raleway)' }}
           >
             Latest Episodes
           </h2>

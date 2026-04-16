@@ -18,7 +18,7 @@ export function EpisodeCard({ episode }: EpisodeCardProps) {
       {epNumber !== null && (
         <span
           className="absolute top-4 right-5 text-5xl font-bold text-brand-amber/20 group-hover:text-brand-amber/40 transition-colors select-none leading-none"
-          style={{ fontFamily: 'var(--font-syne)' }}
+          style={{ fontFamily: 'var(--font-raleway)' }}
           aria-hidden="true"
         >
           {String(epNumber).padStart(2, '0')}
@@ -28,7 +28,7 @@ export function EpisodeCard({ episode }: EpisodeCardProps) {
       <div className="flex flex-col gap-2 pr-12">
         <h2
           className="text-lg font-bold leading-snug group-hover:text-brand-amber transition-colors"
-          style={{ fontFamily: 'var(--font-syne)' }}
+          style={{ fontFamily: 'var(--font-raleway)' }}
         >
           {episode.title}
         </h2>
