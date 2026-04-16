@@ -51,11 +51,11 @@ export default function RootLayout({
       lang="et"
       className={`${geistSans.variable} ${geistMono.variable} ${raleway.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-[#0d0f14] text-white">
+      <body className="min-h-full flex flex-col bg-white text-brand-dark">
         <Navigation />
         <main className="flex-1">{children}</main>
-        <footer className="border-t border-white/10 py-8 mt-16">
-          <div className="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-white/40">
+        <footer className="border-t border-brand-gray py-8 mt-16">
+          <div className="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-brand-dark/40">
             <span>© {new Date().getFullYear()} Algorütm</span>
             <span>algorytm.ee</span>
           </div>

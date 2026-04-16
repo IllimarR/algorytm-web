@@ -1,4 +1,4 @@
-import { getEpisodes } from '@/lib/api/captivate';
+import { getEpisodesFromRss } from '@/lib/api/rss';
 import { EpisodeCard } from '@/components/episode-card';
 import type { Metadata } from 'next';
 
@@ -8,16 +8,16 @@ export const metadata: Metadata = {
 };
 
 export default async function EpisodesPage() {
-  const episodes = await getEpisodes().catch(() => null);
+  const episodes = await getEpisodesFromRss().catch(() => null);
 
   return (
     <section className="max-w-6xl mx-auto px-6 py-12">
       <div className="mb-12">
-        <p className="text-xs font-mono tracking-[0.2em] text-brand-amber uppercase mb-3">
+        <p className="text-xs font-mono tracking-[0.2em] text-brand-blue/60 uppercase mb-3">
           Archive
         </p>
         <h1
-          className="text-4xl sm:text-5xl font-bold tracking-tight"
+          className="text-4xl sm:text-5xl font-bold tracking-tight text-brand-blue"
           style={{ fontFamily: 'var(--font-raleway)' }}
         >
           All Episodes
@@ -25,15 +25,17 @@ export default async function EpisodesPage() {
       </div>
 
       {episodes === null ? (
-        <p className="text-white/30 text-sm">Episodes unavailable — API not configured.</p>
+        <p className="text-brand-dark/30 text-sm">
+          Episodes unavailable — RSS feed not configured.
+        </p>
       ) : episodes.length === 0 ? (
-        <p className="text-white/30 text-sm">No episodes published yet.</p>
+        <p className="text-brand-dark/30 text-sm">No episodes published yet.</p>
       ) : (
         <>
-          <p className="text-sm text-white/30 mb-8 font-mono">
+          <p className="text-sm text-brand-dark/30 mb-8 font-mono">
             {episodes.length} episode{episodes.length !== 1 ? 's' : ''}
           </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-white/5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-brand-gray">
             {episodes.map((episode) => (
               <EpisodeCard key={episode.id} episode={episode} />
             ))}
