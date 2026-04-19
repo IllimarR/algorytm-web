@@ -1,11 +1,17 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import type { Locale } from '@/lib/i18n/messages';
+import { LanguageSwitcher } from '@/components/language-switcher';
 
-export function Navigation() {
+interface NavigationProps {
+  locale: Locale;
+}
+
+export function Navigation({ locale }: NavigationProps) {
   return (
     <header className="sticky top-0 z-50 border-b border-brand-gray bg-white/95 backdrop-blur-sm">
       <nav className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-3 group">
+        <Link href={`/${locale}`} className="flex items-center gap-3 group">
           <Image
             src="/media/logo/Algorütm_Logo icon round.svg"
             alt=""
@@ -22,14 +28,7 @@ export function Navigation() {
           </span>
         </Link>
 
-        <div className="flex items-center gap-6">
-          <Link
-            href="/episodes"
-            className="text-sm text-brand-dark/60 hover:text-brand-blue transition-colors"
-          >
-            Episodes
-          </Link>
-        </div>
+        <LanguageSwitcher current={locale} />
       </nav>
     </header>
   );
