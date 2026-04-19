@@ -76,7 +76,7 @@ export default async function RootLayout({
       <body className="min-h-full flex flex-col bg-white text-brand-dark">
         <Navigation locale={typedLocale} />
         <main className="flex-1">{children}</main>
-        <footer className="mt-16">
+        <footer>
           <div className="h-px bg-gradient-to-r from-brand-blue via-brand-blue/20 to-transparent" />
           <div className="py-8">
             <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row md:items-center md:justify-between gap-6 text-sm text-brand-dark/40">
