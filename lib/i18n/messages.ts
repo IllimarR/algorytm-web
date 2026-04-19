@@ -70,6 +70,10 @@ type Messages = {
     episodesTitle: string;
     episodesDescription: string;
   };
+  footer: {
+    supportedBy: string;
+    youtubeLabel: string;
+  };
 };
 
 const dictionaries: Record<Locale, Messages> = {
@@ -107,6 +111,10 @@ const dictionaries: Record<Locale, Messages> = {
       episodesTitle: 'Saated — Algorütm',
       episodesDescription: 'Kõik Algorütmi podcasti saated.',
     },
+    footer: {
+      supportedBy: 'Algorütmi toetavad',
+      youtubeLabel: 'Algorütm YouTube\u2019is',
+    },
   },
   en: {
     home: {
@@ -141,6 +149,10 @@ const dictionaries: Record<Locale, Messages> = {
       ogLocale: 'en_US',
       episodesTitle: 'Episodes — Algorütm',
       episodesDescription: 'All episodes of the Algorütm Estonian tech podcast.',
+    },
+    footer: {
+      supportedBy: 'Supported by',
+      youtubeLabel: 'Algorütm on YouTube',
     },
   },
 };

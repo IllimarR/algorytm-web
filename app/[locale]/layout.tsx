@@ -4,6 +4,7 @@ import { Geist, Geist_Mono } from 'next/font/google';
 import localFont from 'next/font/local';
 import '../globals.css';
 import { Navigation } from '@/components/navigation';
+import { Sponsors } from '@/components/sponsors';
 import { siteConfig } from '@/lib/config';
 import { getMessages, isLocale, locales, type Locale } from '@/lib/i18n/messages';
 
@@ -75,9 +76,10 @@ export default async function RootLayout({
       <body className="min-h-full flex flex-col bg-white text-brand-dark">
         <Navigation locale={typedLocale} />
         <main className="flex-1">{children}</main>
-        <footer className="border-t border-brand-gray py-8 mt-16">
-          <div className="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-brand-dark/40">
+        <footer className="border-t border-brand-gray mt-16 py-8">
+          <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row md:items-center md:justify-between gap-6 text-sm text-brand-dark/40">
             <span>© {new Date().getFullYear()} Algorütm</span>
+            <Sponsors locale={typedLocale} />
             <span>algorytm.ee</span>
           </div>
         </footer>
