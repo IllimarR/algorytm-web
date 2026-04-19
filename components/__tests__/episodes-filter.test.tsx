@@ -63,7 +63,7 @@ describe('EpisodesFilter', () => {
     mockSearchParams.set('from', '2023-01');
     mockSearchParams.set('to', '2024-12');
     render(<EpisodesFilter episodes={episodes} locale="et" />);
-    expect(screen.getByText('3 episoodi')).toBeInTheDocument();
+    expect(screen.getByText('3 saadet')).toBeInTheDocument();
   });
 
   it('filters episodes when from and to params are set', () => {
@@ -72,7 +72,7 @@ describe('EpisodesFilter', () => {
     render(<EpisodesFilter episodes={episodes} locale="et" />);
     expect(screen.getAllByTestId('episode-card')).toHaveLength(1);
     expect(screen.getByText('Jun 2023 episode')).toBeInTheDocument();
-    expect(screen.getByText('1 episoodi')).toBeInTheDocument();
+    expect(screen.getByText('1 saadet')).toBeInTheDocument();
   });
 
   it('calls router.replace on mount to write default params (current year) when none are present', () => {
