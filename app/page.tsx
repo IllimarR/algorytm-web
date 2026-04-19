@@ -30,7 +30,7 @@ export default async function HomePage() {
               className="inline-flex items-center gap-2 px-6 py-3 bg-brand-blue text-white text-sm font-bold hover:bg-brand-blue-dark transition-colors"
               style={{ fontFamily: 'var(--font-raleway)' }}
             >
-              All Episodes
+              More Episodes
               <span aria-hidden="true">→</span>
             </Link>
           </div>
@@ -54,7 +54,7 @@ export default async function HomePage() {
               href="/episodes"
               className="text-xs text-brand-dark/40 hover:text-brand-blue transition-colors"
             >
-              View all →
+              More Episodes →
             </Link>
           )}
         </div>

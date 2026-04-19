@@ -52,12 +52,16 @@ describe('EpisodesFilter', () => {
     expect(screen.getByText('Kuni')).toBeInTheDocument();
   });
 
-  it('shows all episodes when no filter is active (defaults cover everything)', () => {
+  it('shows all episodes when Kõik range is applied via params', () => {
+    mockSearchParams.set('from', '2023-01');
+    mockSearchParams.set('to', '2024-12');
     render(<EpisodesFilter episodes={episodes} />);
     expect(screen.getAllByTestId('episode-card')).toHaveLength(3);
   });
 
   it('shows episode count', () => {
+    mockSearchParams.set('from', '2023-01');
+    mockSearchParams.set('to', '2024-12');
     render(<EpisodesFilter episodes={episodes} />);
     expect(screen.getByText('3 saadet')).toBeInTheDocument();
   });
@@ -71,10 +75,11 @@ describe('EpisodesFilter', () => {
     expect(screen.getByText('1 saadet')).toBeInTheDocument();
   });
 
-  it('calls router.replace on mount to write default params when none are present', () => {
+  it('calls router.replace on mount to write default params (current year) when none are present', () => {
+    const currentYear = new Date().getFullYear();
     render(<EpisodesFilter episodes={episodes} />);
     expect(mockReplace).toHaveBeenCalledWith(
-      expect.stringMatching(/from=2023-01&to=\d{4}-\d{2}/)
+      expect.stringMatching(new RegExp(`from=${currentYear}-01&to=\\d{4}-\\d{2}`))
     );
   });
 

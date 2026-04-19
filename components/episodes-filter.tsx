@@ -28,13 +28,13 @@ export function EpisodesFilter({ episodes }: EpisodesFilterProps) {
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  // Oldest episode month/year as the default "from"
   const sorted = useMemo(
     () => [...episodes].sort((a, b) => a.publishedAt.localeCompare(b.publishedAt)),
     [episodes]
   );
 
-  const defaultFrom = useMemo(
+  // Oldest month in the feed — anchors the "Kõik" preset and the year picker.
+  const oldestFrom = useMemo(
     () =>
       sorted.length > 0
         ? toYearMonth(sorted[0].publishedAt)
@@ -42,7 +42,12 @@ export function EpisodesFilter({ episodes }: EpisodesFilterProps) {
     [sorted]
   );
 
-  const defaultTo = useMemo(() => toYearMonth(new Date().toISOString()), []);
+  const nowYm = useMemo(() => toYearMonth(new Date().toISOString()), []);
+  const currentYear = useMemo(() => new Date().getFullYear(), []);
+
+  // Default view when no params are present: current year through this month.
+  const defaultFrom = `${currentYear}-01`;
+  const defaultTo = nowYm;
 
   const from = validYm(searchParams.get('from'), defaultFrom);
   const to = validYm(searchParams.get('to'), defaultTo);
@@ -63,16 +68,12 @@ export function EpisodesFilter({ episodes }: EpisodesFilterProps) {
   const [toYear, toMonth] = to.split('-').map(Number);
 
   const years = useMemo(() => {
-    const oldestYear =
-      sorted.length > 0
-        ? Number(defaultFrom.slice(0, 4))
-        : new Date().getFullYear();
-    const currentYear = new Date().getFullYear();
+    const oldestYear = Number(oldestFrom.slice(0, 4));
     return Array.from(
       { length: currentYear - oldestYear + 1 },
       (_, i) => oldestYear + i
     );
-  }, [sorted, defaultFrom]);
+  }, [oldestFrom, currentYear]);
 
   /**
    * Updates a date range URL param and navigates to the updated URL.
@@ -88,10 +89,54 @@ export function EpisodesFilter({ episodes }: EpisodesFilterProps) {
     router.replace(`?${params.toString()}`);
   }
 
+  const quickSelects: { key: string; label: string; from: string; to: string }[] = [
+    { key: 'current-year', label: `${currentYear} aasta`, from: `${currentYear}-01`, to: nowYm },
+    {
+      key: 'last-year',
+      label: `${currentYear - 1} aasta`,
+      from: `${currentYear - 1}-01`,
+      to: `${currentYear - 1}-12`,
+    },
+    {
+      key: 'two-years-ago',
+      label: `${currentYear - 2} aasta`,
+      from: `${currentYear - 2}-01`,
+      to: `${currentYear - 2}-12`,
+    },
+    { key: 'all', label: 'Kõik', from: oldestFrom, to: nowYm },
+  ];
+
+  function applyRange(newFrom: string, newTo: string) {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set('from', newFrom);
+    params.set('to', newTo);
+    router.replace(`?${params.toString()}`);
+  }
+
   const filtered = filterEpisodesByDateRange(episodes, from, to);
 
   return (
     <>
+      <div className="flex flex-wrap gap-2 mb-6">
+        {quickSelects.map((preset) => {
+          const active = from === preset.from && to === preset.to;
+          return (
+            <button
+              key={preset.key}
+              type="button"
+              onClick={() => applyRange(preset.from, preset.to)}
+              className={`border px-3 py-1.5 font-mono text-sm transition-colors ${
+                active
+                  ? 'border-brand-blue bg-brand-blue text-white'
+                  : 'border-brand-gray bg-white text-brand-dark hover:border-brand-blue/40'
+              }`}
+            >
+              {preset.label}
+            </button>
+          );
+        })}
+      </div>
+
       <div className="flex flex-wrap gap-8 mb-8">
         {/* From picker */}
         <div className="flex flex-col gap-2">
