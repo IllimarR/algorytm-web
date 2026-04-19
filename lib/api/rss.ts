@@ -65,9 +65,16 @@ export async function getEpisodesFromRss(): Promise<Episode[]> {
   const xml = await response.text();
   const feed = await parser.parseString(xml);
 
+  const total = feed.items.length;
+
   return feed.items.map((item, index): Episode => {
-    const epNumber = item.itunes?.episode ? parseInt(item.itunes.episode, 10) : null;
+    const parsedEp = item.itunes?.episode ? parseInt(item.itunes.episode, 10) : NaN;
     const seasonNumber = item.itunes?.season ? parseInt(item.itunes.season, 10) : null;
+
+    // Older items in the feed may not carry <itunes:episode>. Since the feed
+    // is newest-first, fall back to position-based numbering so every episode
+    // still has a number.
+    const episodeNumber = isNaN(parsedEp) ? total - index : parsedEp;
 
     // Derive a stable ID from the guid, falling back to index
     const id = item.guid ?? String(index);
@@ -80,7 +87,7 @@ export async function getEpisodesFromRss(): Promise<Episode[]> {
       publishedAt: item.pubDate ? new Date(item.pubDate).toISOString() : new Date().toISOString(),
       audioUrl: item.enclosure?.url ?? '',
       duration: parseDuration(item.itunes?.duration ?? ''),
-      episodeNumber: isNaN(epNumber!) ? null : epNumber,
+      episodeNumber,
       seasonNumber: isNaN(seasonNumber!) ? null : seasonNumber,
       imageUrl: item.itunes?.image ?? null,
       status: 'published',
