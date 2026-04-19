@@ -78,6 +78,9 @@ type Messages = {
     supportedBy: string;
     youtubeLabel: string;
   };
+  card: {
+    newBadge: string;
+  };
 };
 
 const dictionaries: Record<Locale, Messages> = {
@@ -123,6 +126,9 @@ const dictionaries: Record<Locale, Messages> = {
       supportedBy: 'Algorütmi toetavad',
       youtubeLabel: 'Algorütm YouTube\u2019is',
     },
+    card: {
+      newBadge: 'Uus',
+    },
   },
   en: {
     home: {
@@ -165,6 +171,9 @@ const dictionaries: Record<Locale, Messages> = {
     footer: {
       supportedBy: 'Supported by',
       youtubeLabel: 'Algorütm on YouTube',
+    },
+    card: {
+      newBadge: 'New',
     },
   },
 };
