@@ -209,7 +209,7 @@ export function EpisodesFilter({ episodes, locale }: EpisodesFilterProps) {
       {filtered.length === 0 ? (
         <p className="text-brand-dark/30 text-sm">{m.filter.emptyState}</p>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-brand-gray">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {filtered.map((episode) => (
             <EpisodeCard key={episode.id} episode={episode} locale={locale} />
           ))}

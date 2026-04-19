@@ -12,7 +12,7 @@ export function Navigation({ locale }: NavigationProps) {
   const m = getMessages(locale);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-brand-gray bg-white/95 backdrop-blur-sm">
+    <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm">
       <nav className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
         <Link href={`/${locale}`} className="flex items-center gap-3 group">
           <Image
@@ -50,6 +50,7 @@ export function Navigation({ locale }: NavigationProps) {
           <LanguageSwitcher current={locale} />
         </div>
       </nav>
+      <div className="h-px bg-gradient-to-r from-brand-blue via-brand-blue/20 to-transparent" />
     </header>
   );
 }

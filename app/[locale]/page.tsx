@@ -74,7 +74,7 @@ export default async function HomePage({
         ) : latestEpisodes.length === 0 ? (
           <p className="text-brand-dark/30 text-sm">{m.home.noEpisodes}</p>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-px bg-brand-gray">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {latestEpisodes.map((episode) => (
               <EpisodeCard key={episode.id} episode={episode} locale={locale} />
             ))}
