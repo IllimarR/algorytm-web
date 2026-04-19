@@ -1,8 +1,8 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
-import { getEpisodeById } from '@/lib/api/rss';
-import { getMessages, isLocale, type Locale } from '@/lib/i18n/messages';
+import { getEpisodeById, getEpisodesFromRss } from '@/lib/api/rss';
+import { getMessages, isLocale, locales, type Locale } from '@/lib/i18n/messages';
 import { formatDate, formatDuration } from '@/lib/utils/format';
 import { prepareShownotes } from '@/lib/utils/linkify';
 import type { Metadata } from 'next';
@@ -10,6 +10,13 @@ import type { Metadata } from 'next';
 interface Params {
   locale: string;
   id: string;
+}
+
+export async function generateStaticParams() {
+  const episodes = await getEpisodesFromRss().catch(() => []);
+  return locales.flatMap((locale) =>
+    episodes.map((episode) => ({ locale, id: episode.id }))
+  );
 }
 
 export async function generateMetadata({
