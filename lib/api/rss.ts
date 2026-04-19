@@ -48,13 +48,13 @@ function parseDuration(duration: string): number {
 
 /**
  * Fetches and parses the Captivate.fm RSS feed, returning published episodes newest first.
- * Fetched once at build time; pages are fully static until the next deploy.
+ * Results are cached for 1 hour via Next.js fetch cache.
  *
  * @throws {Error} When the feed cannot be fetched or parsed
  */
 export async function getEpisodesFromRss(): Promise<Episode[]> {
   const response = await fetch(siteConfig.rssUrl, {
-    cache: 'force-cache',
+    next: { revalidate: 3600 },
   });
 
   if (!response.ok) {
