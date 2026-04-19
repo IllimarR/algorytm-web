@@ -51,6 +51,10 @@ type Messages = {
     unavailable: string;
     noEpisodes: string;
   };
+  episode: {
+    backToEpisodes: string;
+    shownotes: string;
+  };
   filter: {
     from: string;
     to: string;
@@ -91,6 +95,10 @@ const dictionaries: Record<Locale, Messages> = {
       unavailable: 'Saated ei ole saadaval — RSS-voog pole seadistatud.',
       noEpisodes: 'Saateid pole veel avaldatud.',
     },
+    episode: {
+      backToEpisodes: 'Kõik saated',
+      shownotes: 'Saate märkmed',
+    },
     filter: {
       from: 'Alates',
       to: 'Kuni',
@@ -129,6 +137,10 @@ const dictionaries: Record<Locale, Messages> = {
       title: 'All Episodes',
       unavailable: 'Episodes unavailable — RSS feed not configured.',
       noEpisodes: 'No episodes published yet.',
+    },
+    episode: {
+      backToEpisodes: 'All Episodes',
+      shownotes: 'Show notes',
     },
     filter: {
       from: 'From',
